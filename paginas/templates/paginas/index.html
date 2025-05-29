@@ -18,7 +18,17 @@
     <h4>Menu Superior</h4>
     <ul>
         <li>
-            <a href="{% url "sobre" %}">  Sobre pw  </a>
+            <li>
+                <a href="{% url "index" %}"> Inicio  </a>
+            </li>
+    
+             <a href="{% url "sobre" %}">  Inicio menu  </a>
+            <li><a href="{% url "cadastrar-pessoa" %}">Pessoa</a></li>
+            <li><a href="{% url "cadastrar-materia" %}">Materia</a></li>
+            <li><a href="{% url "cadastrar-conteudo" %}">Conteudo</a></li>
+            <li><a href="{% url "cadastrar-assunto" %}">Assunto</a></li>
+            <li><a href="{% url "cadastrar-questao" %}">Questao/<a></li>
+
         </li>
 
         <li>
@@ -29,9 +39,9 @@
 
     {%        block conteudo          %}
 
-    <h3>Cadastro</h3>
+    <h3>Página Inicial</h3>
 
-    
+    <p> Bem vindo ao Memorex</p>
 
     {%    endblock   %}
 

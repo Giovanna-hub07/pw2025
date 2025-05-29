@@ -7,8 +7,11 @@ from .views import MateriaCreate, MateriaUpdate, MateriaDelete
 from .views import ConteudoCreate, ConteudoUpdate, ConteudoDelete
 from .views import AssuntoCreate, AssuntoUpdate, AssuntoDelete
 from .views import QuestaoCreate, QuestaoUpdate, QuestaoDelete
+from .views import PessoaList
 
 urlpatterns = [
+
+    path("listar/pessoa/", PessoaList.as_view(), name="Listar-pessoa"),
 
     path("", Inicio.as_view(), name ="index"),
     path("sobre/", SobreView.as_view(), name ="sobre"),

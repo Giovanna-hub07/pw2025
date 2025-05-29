@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import  Pessoa, Materia, Conteudo, Assunto, Questao
@@ -151,3 +151,11 @@ class QuestaoDelete(DeleteView):
     model = Questao
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('index')
+
+
+    ########################################################################
+
+
+class PessoaList(ListView):
+    model = Pessoa
+    template_name = 'paginas/pessoa.html'
