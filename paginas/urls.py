@@ -2,16 +2,17 @@
 from django.urls import path
 
 from .views import Inicio, SobreView
-from .views import PessoaCreate, PessoaUpdate, PessoaDelete
-from .views import MateriaCreate, MateriaUpdate, MateriaDelete
-from .views import ConteudoCreate, ConteudoUpdate, ConteudoDelete
-from .views import AssuntoCreate, AssuntoUpdate, AssuntoDelete
-from .views import QuestaoCreate, QuestaoUpdate, QuestaoDelete
-from .views import PessoaList
+from .views import PessoaCreate, PessoaUpdate, PessoaDelete, PessoaList 
+from .views import MateriaCreate, MateriaUpdate, MateriaDelete, MateriaList
+from .views import ConteudoCreate, ConteudoUpdate, ConteudoDelete, ConteudoList
+from .views import AssuntoCreate, AssuntoUpdate, AssuntoDelete, AssuntoList
+from .views import QuestaoCreate, QuestaoUpdate, QuestaoDelete, QuestaoList
+
+
 
 urlpatterns = [
 
-    path("listar/pessoa/", PessoaList.as_view(), name="Listar-pessoa"),
+   
 
     path("", Inicio.as_view(), name ="index"),
     path("sobre/", SobreView.as_view(), name ="sobre"),
@@ -34,7 +35,10 @@ urlpatterns = [
     path("deletar/assunto/<int:pk>/", AssuntoDelete.as_view(), name= "deletar-assunto"  ),
     path("deletar/questão/<int:pk>/", QuestaoDelete.as_view(), name= "deletar-questão"  ),
 
-
-
+     path("listar/pessoa/", PessoaList.as_view(), name="Listar-pessoa"),
+     path("listar/materia/", MateriaList.as_view(), name="listar-materia"),
+     path("listar/conteudo/", ConteudoList.as_view(), name="Listar-conteudo"),
+     path("listar/assunto", AssuntoList.as_view(), name="Listar-assunto"),
+     path("listar/questao", QuestaoList.as_view(), name="listar-questao" )
 ]
 
