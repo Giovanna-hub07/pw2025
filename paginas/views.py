@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import  Pessoa, Materia, Conteudo, Assunto, Questao
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # função que converte o nome de uma url na rota dela
 
@@ -14,7 +15,7 @@ class Inicio(TemplateView):
 class SobreView(TemplateView):
     template_name = "paginas/sobre.html"
     
-class PessoaCreate(CreateView):
+class PessoaCreate(LoginRequiredMixin,CreateView):
     model = Pessoa
     fields = ['nome', 'nascimento', 'email', 'cidade']
     template_name = 'paginas/formulario.html'
@@ -25,7 +26,7 @@ class PessoaCreate(CreateView):
     }
 
 
-class PessoaUpdate(UpdateView):
+class PessoaUpdate(LoginRequiredMixin,UpdateView):
     model = Pessoa
     fields = ['nome', 'nascimento', 'email', 'cidade']
     template_name = 'paginas/formulario.html'
@@ -37,7 +38,7 @@ class PessoaUpdate(UpdateView):
 
 
 
-class PessoaDelete(DeleteView):
+class PessoaDelete(LoginRequiredMixin,DeleteView):
     model = Pessoa
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-pessoa')
@@ -46,7 +47,7 @@ class PessoaDelete(DeleteView):
 ########################################################################
 
 
-class MateriaCreate(CreateView):
+class MateriaCreate(LoginRequiredMixin,CreateView):
     model = Materia
     fields = ['nome']
     template_name = 'paginas/formulario.html'
@@ -57,7 +58,7 @@ class MateriaCreate(CreateView):
     }
 
 
-class MateriaUpdate(UpdateView):
+class MateriaUpdate(LoginRequiredMixin,UpdateView):
     model = Materia
     fields = ['nome']
     template_name = 'paginas/formulario.html'
@@ -65,7 +66,7 @@ class MateriaUpdate(UpdateView):
      
 
 
-class MateriaDelete(DeleteView):
+class MateriaDelete(LoginRequiredMixin,DeleteView):
     model = Materia
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-materia')
@@ -74,7 +75,7 @@ class MateriaDelete(DeleteView):
 ########################################################################
 
 
-class ConteudoCreate(CreateView):
+class ConteudoCreate(LoginRequiredMixin,CreateView):
     model = Conteudo
     fields = ['nome', 'materia']
     template_name = 'paginas/formulario.html'
@@ -86,14 +87,14 @@ class ConteudoCreate(CreateView):
 
 
 
-class ConteudoUpdate(UpdateView):
+class ConteudoUpdate(LoginRequiredMixin,UpdateView):
     model = Conteudo
     fields = ['nome', 'materia']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-conteudo')
 
 
-class ConteudoDelete(DeleteView):
+class ConteudoDelete(LoginRequiredMixin,DeleteView):
     model = Conteudo
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-conteudo')
@@ -102,7 +103,7 @@ class ConteudoDelete(DeleteView):
 ########################################################################
 
 
-class AssuntoCreate(CreateView):
+class AssuntoCreate(LoginRequiredMixin,CreateView):
     model = Assunto
     fields = ['nome', 'conteudo']
     template_name = 'paginas/formulario.html'
@@ -113,14 +114,14 @@ class AssuntoCreate(CreateView):
     }
 
 
-class AssuntoUpdate(UpdateView):
+class AssuntoUpdate(LoginRequiredMixin,UpdateView):
     model = Assunto
     fields = ['nome', 'conteudo']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-assunto')
 
 
-class AssuntoDelete(DeleteView):
+class AssuntoDelete(LoginRequiredMixin,DeleteView):
     model = Assunto
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-assunto')
@@ -129,7 +130,7 @@ class AssuntoDelete(DeleteView):
 ########################################################################
 
 
-class QuestaoCreate(CreateView):
+class QuestaoCreate(LoginRequiredMixin,CreateView):
     model = Questao
     fields = ['descricao', 'resolucao', 'assunto', 'cadastrada_por']
     template_name = 'paginas/formulario.html'
@@ -140,14 +141,14 @@ class QuestaoCreate(CreateView):
     }
 
 
-class QuestaoUpdate(UpdateView):
+class QuestaoUpdate(LoginRequiredMixin,UpdateView):
     model = Questao
     fields = ['descricao', 'resolucao', 'assunto', 'cadastrada_por']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-questao')
 
 
-class QuestaoDelete(DeleteView):
+class QuestaoDelete(LoginRequiredMixin,DeleteView):
     model = Questao
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-questao')

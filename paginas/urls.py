@@ -8,11 +8,32 @@ from .views import ConteudoCreate, ConteudoUpdate, ConteudoDelete, ConteudoList
 from .views import AssuntoCreate, AssuntoUpdate, AssuntoDelete, AssuntoList
 from .views import QuestaoCreate, QuestaoUpdate, QuestaoDelete, QuestaoList
 
-
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
-   
+    #criar rota para página de login
+    path("login/", auth_views.LoginView.as_view(
+        template_name = 'paginas/formulario.html',
+         extra_context = {
+            'titulo': 'Autenticação',
+            'botão': 'Entrar'
+        }
+    ), name="login"),
+
+    #criar uma rota de logout
+    path("sair/", auth_views.LogoutView.as_view(), name="logout"),
+
+    path("senha/", auth_views.PasswordChangeView.as_view(
+        template_name = 'paginas/formulario.html',
+        extra_context = {
+            'titulo': 'Atualizar senha',
+            'botão': 'Salvar'
+        }
+    ), name="Senha"),
+    
+
+
 
     path("", Inicio.as_view(), name ="index"),
     path("sobre/", SobreView.as_view(), name ="sobre"),
@@ -38,7 +59,7 @@ urlpatterns = [
      path("listar/pessoa/", PessoaList.as_view(), name="Listar-pessoa"),
      path("listar/materia/", MateriaList.as_view(), name="listar-materia"),
      path("listar/conteudo/", ConteudoList.as_view(), name="Listar-conteudo"),
-     path("listar/assunto", AssuntoList.as_view(), name="Listar-assunto"),
-     path("listar/questao", QuestaoList.as_view(), name="listar-questao" )
+     path("listar/assunto/", AssuntoList.as_view(), name="Listar-assunto"),
+     path("listar/questao/", QuestaoList.as_view(), name="listar-questao" )
 ]
 
