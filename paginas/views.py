@@ -17,7 +17,7 @@ class SobreView(TemplateView):
     
 class PessoaCreate(LoginRequiredMixin,CreateView):
     model = Pessoa
-    fields = ['nome', 'nascimento', 'email', 'cidade']
+    fields = ['nome', 'nascimento', 'cidade']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-pessoa')
     extra_context = {
@@ -28,7 +28,7 @@ class PessoaCreate(LoginRequiredMixin,CreateView):
 
 class PessoaUpdate(LoginRequiredMixin,UpdateView):
     model = Pessoa
-    fields = ['nome', 'nascimento', 'email', 'cidade']
+    fields = ['nome', 'nascimento', 'cidade']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-pessoa')
     extra_context = {

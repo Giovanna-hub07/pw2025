@@ -6,10 +6,11 @@ from django.contrib.auth.models import User
 
 
 class Pessoa(models.Model):
-    nome = models.CharField(max_length=50, verbose_name="Qual seu nome?", help_text="Digite seu nome completo")
+    nome = models.CharField(max_length=50, verbose_name="Qual o seu nome?", help_text="Digite seu nome completo")
     nascimento = models.DateField(verbose_name="Data de nascimento")
-    email = models.CharField(max_length=100)
     cidade = models.CharField(max_length=100)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='pessoa')
+
 
     def __str__(self):
         return '{} ({})'.format(self.nome, self.nascimento)
