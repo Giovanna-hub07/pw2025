@@ -132,7 +132,7 @@ class AssuntoDelete(LoginRequiredMixin,DeleteView):
 
 class QuestaoCreate(LoginRequiredMixin,CreateView):
     model = Questao
-    fields = ['descricao', 'resolucao', 'assunto', 'cadastrada_por']
+    fields = ['descricao', 'resolucao', 'assunto']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-questao')
     extra_context = {
@@ -140,12 +140,19 @@ class QuestaoCreate(LoginRequiredMixin,CreateView):
         'botão': 'Cadastrar'
     }
 
+    def form_valid(self, form):
+       form.instance.cadastrada_por = self.request.user
+       url = super().form_valid(form)
+       return url
+         
+    
 
 class QuestaoUpdate(LoginRequiredMixin,UpdateView):
     model = Questao
     fields = ['descricao', 'resolucao', 'assunto', 'cadastrada_por']
     template_name = 'paginas/formulario.html'
     success_url = reverse_lazy('listar-questao')
+    
 
 
 class QuestaoDelete(LoginRequiredMixin,DeleteView):

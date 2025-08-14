@@ -20,8 +20,10 @@ class Materia(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome da matéria")
 
     def __str__(self):
-        return self.nome
+        return  self.nome
 
+class Meta:
+        ordering = ['nome']
 
 class Conteudo(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do conteúdo")
@@ -29,6 +31,9 @@ class Conteudo(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.nome, self.materia)
+    
+    class Meta:
+        ordering = ['nome , materia']
 
 
 class Assunto(models.Model):
@@ -38,6 +43,8 @@ class Assunto(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.nome, self.conteudo)
 
+    class Meta:
+        ordering = ['nome , conteudo']
 
 class Questao(models.Model):
     descricao = models.TextField(verbose_name="Enunciado da questão")
@@ -48,3 +55,6 @@ class Questao(models.Model):
 
     def __str__(self):
         return 'Questão sobre: {}'.format(self.assunto)
+    
+    class Meta:
+        ordering = ['assuto']

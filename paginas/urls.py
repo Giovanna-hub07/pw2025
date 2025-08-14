@@ -52,7 +52,7 @@ urlpatterns = [
 
     path("deletar/pessoa/<int:pk>/", PessoaDelete.as_view(), name= "deletar-pessoa"  ),
     path("deletar/materia/<int:pk>/", MateriaDelete.as_view(), name= "deletar-materia"  ),
-    path("deletar/conteudo/<int:pk>/", ConteudoDelete.as_view(), name= "deletarr-conteudo"  ),
+    path("deletar/conteudo/<int:pk>/", ConteudoDelete.as_view(), name= "deletar-conteudo"  ),
     path("deletar/assunto/<int:pk>/", AssuntoDelete.as_view(), name= "deletar-assunto"  ),
     path("deletar/questão/<int:pk>/", QuestaoDelete.as_view(), name= "deletar-questão"  ),
 
