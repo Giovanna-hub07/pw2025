@@ -1,0 +1,51 @@
+{% extends 'paginas/index.html' %}
+{% load static %}
+
+{% block titulo %}
+    Listar Conteúdos
+{% endblock %}
+
+{% block conteudo %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3">Listagem de Conteúdos</h1>
+        <a href="{% url 'cadastrar-conteudo' %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i> Cadastrar Novo Conteúdo
+        </a>
+    </div>
+
+    {% if object_list %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nome do Conteúdo</th>
+                    <th>Matéria</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conteudo in object_list %}
+                <tr>
+                    <td>{{ conteudo.nome }}</td>
+                    <td>{{ conteudo.materia.nome }}</td>
+                    <td>
+                        <a href="{% url 'editar-conteudo' conteudo.pk %}" class="btn btn-warning btn-sm" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'excluir-conteudo' conteudo.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        Nenhum conteúdo cadastrado.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

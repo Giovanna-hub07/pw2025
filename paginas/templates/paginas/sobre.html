@@ -3,14 +3,42 @@
 {% load static %}
 
 {% block conteudo %}
-<h3>Sobre</h3>
+<h3 class="border-bottom pb-1 mb-3">Sobre o Memorex</h3>
 
 <p>
-    texto da página Sobre 
+O <strong>Memorex</strong> é um material de estudo resumido e visual, criado para ajudar alunos a entender melhor conceitos de matemática. Ele combina anotações, mapas mentais e questões resolvidas, promovendo uma aprendizagem prática e eficiente.
 </p>
 
-<h2>O memorex é um material de estudo resumido e visual, feito com anotações, mapas mentais e questões resolvidas, pensado para ajudar alunos a entender melhor matemática. Neste caso, o foco é em Geometria Analítica (ponto, reta e circunferência), com fórmulas, esquemas e exemplos práticos. A ideia é facilitar a revisão e ajudar na compreensão dos conteúdos, especialmente em provas como Enem e vestibulares, promovendo uma aprendizagem mais clara e eficiente.
+<h4 class="mt-4">🎯 Objetivo do Memorex</h4>
+<p>
+O foco principal é <strong>Geometria Analítica</strong> (pontos, retas e circunferências), oferecendo fórmulas, esquemas e exemplos práticos. A ideia é facilitar a revisão e a compreensão dos conteúdos, especialmente para provas como ENEM e vestibulares.
+</p>
 
-</h2>
+<h4 class="mt-4">💡 Como utilizar</h4>
+<ul>
+    <li>Revisar conceitos com esquemas e mapas mentais.</li>
+    <li>Resolver questões para fixar o aprendizado.</li>
+    <li>Consultar fórmulas e exemplos de maneira rápida.</li>
+</ul>
 
-{% endblock conteudo %}
+<h4 class="mt-4">📚 Benefícios</h4>
+<ul>
+    <li>Aprendizagem mais clara e objetiva.</li>
+    <li>Foco em conteúdos essenciais para provas e vestibulares.</li>
+    <li>Interface visual que facilita a memorização e a revisão.</li>
+</ul>
+
+<h5 class="mt-4">🧩 Sobre o Sistema</h5>
+<p>
+O Memorex organiza o conteúdo de forma intuitiva, permitindo aos alunos navegar facilmente entre matérias, tópicos e questões resolvidas. A plataforma prioriza clareza, praticidade e agilidade na revisão.
+</p>
+
+<p>
+<img src="{% static 'img/memorex_diagrama.png' %}" alt="Diagrama Memorex" class="img-fluid mt-3 mb-3">
+</p>
+
+<p>
+O diagrama representa visualmente a organização do conteúdo, ajudando a compreender como cada tópico se conecta e como os exercícios estão relacionados às fórmulas e conceitos.
+</p>
+
+{% endblock %}
