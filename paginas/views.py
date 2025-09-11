@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Pessoa, Materia, Conteudo, Assunto, Questao
 from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import GroupRequiredMixin
 from django.contrib.auth.models import User
 # from .forms import UsuarioCadastroForm
 
@@ -24,9 +25,16 @@ from django.contrib.auth.models import User
 class InicioView(TemplateView):
     template_name = 'paginas/index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["quantidade_questoes"] = Questao.objects.all().count()
+        context["quantidade_conteudo"] = Conteudo.objects.all().count()
+        context["quantidade_assunto"] = Assunto.objects.all().count()
+        return context
+
 class SobreView(TemplateView):
     template_name = 'paginas/sobre.html'
-
+''
 # -------------------------------------------
 # CRUD Pessoa
 class PessoaCreate(LoginRequiredMixin, CreateView):
@@ -64,7 +72,8 @@ class PessoaList(LoginRequiredMixin, ListView):
 
 # -------------------------------------------
 # CRUD Matéria
-class MateriaCreate(LoginRequiredMixin, CreateView):
+class MateriaCreate(GroupRequiredMixin, CreateView):
+    group_required = ["Administrador", "Professor"]
     model = Materia
     template_name = 'paginas/form.html'
     fields = ['nome']
@@ -74,17 +83,19 @@ class MateriaCreate(LoginRequiredMixin, CreateView):
         'botao': 'Cadastrar',
     }
 
-class MateriaUpdate(LoginRequiredMixin, UpdateView):
-    model = Materia
-    template_name = 'paginas/form.html'
-    fields = ['nome']
-    success_url = reverse_lazy('listar-materia')
-    extra_context = {
+class MateriaUpdate(GroupRequiredMixin, UpdateView):
+     group_required = ["Administrador", "Professor"]
+     model = Materia
+     template_name = 'paginas/form.html'
+     fields = ['nome']
+     success_url = reverse_lazy('listar-materia')
+     extra_context = {
         'titulo': 'Editar Matéria',
         'botao': 'Salvar',
     }
 
-class MateriaDelete(LoginRequiredMixin, DeleteView):
+class MateriaDelete(GroupRequiredMixin, DeleteView):
+    group_required = ["Administrador", "Professor"]
     model = Materia
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-materia')
@@ -93,13 +104,15 @@ class MateriaDelete(LoginRequiredMixin, DeleteView):
         'botao': 'Excluir',
     }
 
-class MateriaList(LoginRequiredMixin, ListView):
+class MateriaList(GroupRequiredMixin, ListView):
+    group_required = ["Administrador", "Professor"]
     model = Materia
     template_name = 'listas/materia.html'
 
 # -------------------------------------------
 # CRUD Conteúdo
-class ConteudoCreate(LoginRequiredMixin, CreateView):
+class ConteudoCreate(GroupRequiredMixin, CreateView):
+    group_required = ["Administrador", "Professor"]
     model = Conteudo
     template_name = 'paginas/form.html'
     fields = ['nome', 'materia']
@@ -109,7 +122,8 @@ class ConteudoCreate(LoginRequiredMixin, CreateView):
         'botao': 'Cadastrar',
     }
 
-class ConteudoUpdate(LoginRequiredMixin, UpdateView):
+class ConteudoUpdate(GroupRequiredMixin, UpdateView):
+    group_required = ["Administrador", "Professor"]
     model = Conteudo
     template_name = 'paginas/form.html'
     fields = ['nome', 'materia']
@@ -119,7 +133,8 @@ class ConteudoUpdate(LoginRequiredMixin, UpdateView):
         'botao': 'Salvar',
     }
 
-class ConteudoDelete(LoginRequiredMixin, DeleteView):
+class ConteudoDelete(GroupRequiredMixin, DeleteView):
+    group_required = ["Administrador", "Professor"]
     model = Conteudo
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-conteudo')
@@ -128,13 +143,15 @@ class ConteudoDelete(LoginRequiredMixin, DeleteView):
         'botao': 'Excluir',
     }
 
-class ConteudoList(LoginRequiredMixin, ListView):
+class ConteudoList(GroupRequiredMixin, ListView):
+    group_required = ["Administrador", "Professor"]
     model = Conteudo
     template_name = 'listas/conteudo.html'
 
 # -------------------------------------------
 # CRUD Assunto
-class AssuntoCreate(LoginRequiredMixin, CreateView):
+class AssuntoCreate(GroupRequiredMixin, CreateView):
+    group_required = ["Administrador", "Professor"]
     model = Assunto
     template_name = 'paginas/form.html'
     fields = ['nome', 'conteudo']
@@ -144,7 +161,8 @@ class AssuntoCreate(LoginRequiredMixin, CreateView):
         'botao': 'Cadastrar',
     }
 
-class AssuntoUpdate(LoginRequiredMixin, UpdateView):
+class AssuntoUpdate(GroupRequiredMixin, UpdateView):
+    group_required = ["Administrador", "Professor"]
     model = Assunto
     template_name = 'paginas/form.html'
     fields = ['nome', 'conteudo']
@@ -154,7 +172,8 @@ class AssuntoUpdate(LoginRequiredMixin, UpdateView):
         'botao': 'Salvar',
     }
 
-class AssuntoDelete(LoginRequiredMixin, DeleteView):
+class AssuntoDelete(GroupRequiredMixin, DeleteView):
+    group_required = ["Administrador", "Professor"]
     model = Assunto
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-assunto')
@@ -163,13 +182,15 @@ class AssuntoDelete(LoginRequiredMixin, DeleteView):
         'botao': 'Excluir',
     }
 
-class AssuntoList(LoginRequiredMixin, ListView):
+class AssuntoList(GroupRequiredMixin, ListView):
+    group_required = ["Administrador", "Professor"]
     model = Assunto
     template_name = 'listas/assunto.html'
 
 # -------------------------------------------
 # CRUD Questão
-class QuestaoCreate(LoginRequiredMixin, CreateView):
+class QuestaoCreate(GroupRequiredMixin, CreateView):
+    group_required = ["Administrador", "Professor"]
     model = Questao
     template_name = 'paginas/form.html'
     fields = ['descricao', 'resolucao', 'assunto']
@@ -183,7 +204,8 @@ class QuestaoCreate(LoginRequiredMixin, CreateView):
         form.instance.cadastrada_por = self.request.user
         return super().form_valid(form)
 
-class QuestaoUpdate(LoginRequiredMixin, UpdateView):
+class QuestaoUpdate(GroupRequiredMixin, UpdateView):
+    group_required = ["Administrador", "Professor"]
     model = Questao
     template_name = 'paginas/form.html'
     fields = ['descricao', 'resolucao', 'assunto']
@@ -196,7 +218,8 @@ class QuestaoUpdate(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return get_object_or_404(Questao, pk=self.kwargs['pk'], cadastrada_por=self.request.user)
 
-class QuestaoDelete(LoginRequiredMixin, DeleteView):
+class QuestaoDelete(GroupRequiredMixin, DeleteView):
+    group_required = ["Administrador", "Professor"]
     model = Questao
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-questao')
@@ -208,10 +231,19 @@ class QuestaoDelete(LoginRequiredMixin, DeleteView):
     def get_object(self, queryset=None):
         return get_object_or_404(Questao, pk=self.kwargs['pk'], cadastrada_por=self.request.user)
 
-class QuestaoList(LoginRequiredMixin, ListView):
+class QuestaoList(GroupRequiredMixin, ListView):
+    group_required = ["Administrador", "Professor"]
     model = Questao
     template_name = 'listas/questao.html'
 
-class MinhasQuestoes(QuestaoList):
+
+
+class MinhasQuestoes(LoginRequiredMixin, ListView):
+    model = Questao
+    template_name = 'listas/questao.html'
     def get_queryset(self):
+        model = Questao
+        template_name = 'listas/questao.html'
+
         return Questao.objects.filter(cadastrada_por=self.request.user)
+    
