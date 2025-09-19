@@ -35,10 +35,10 @@
                     <td>{{ questao.cadastrada_por.username }}</td>
                     <td>
                         <a href="{% url 'editar-questao' questao.pk %}" class="btn btn-warning btn-sm" title="Editar">
-                            <i class="fas fa-edit"></i>
+                            <i class="bi bi-pencil-square"></i>
                         </a>
                         <a href="{% url 'excluir-questao' questao.pk %}" class="btn btn-danger btn-sm" title="Excluir">
-                            <i class="fas fa-trash-alt"></i>
+                            <i class="bi bi-trash"></i>
                         </a>
                     </td>
                 </tr>

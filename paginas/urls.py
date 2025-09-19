@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from .views import (
-    InicioView, SobreView,
+    InicioView, SobreView, CadastroUsuarioView,
     PessoaCreate, PessoaUpdate, PessoaDelete, PessoaList,
     MateriaCreate, MateriaUpdate, MateriaDelete, MateriaList,
     ConteudoCreate, ConteudoUpdate, ConteudoDelete, ConteudoList,
@@ -28,8 +28,9 @@ urlpatterns = [
 
     path("sair/", auth_views.LogoutView.as_view(), name="logout"),
 
-    path("senha/", auth_views.PasswordChangeView.as_view(
+    path("alterar-senha/", auth_views.PasswordChangeView.as_view(
         template_name='paginas/form.html',
+        success_url='/',
         extra_context={
             'titulo': 'Atualizar senha',
             'botao': 'Salvar'
@@ -37,7 +38,7 @@ urlpatterns = [
     ), name="alterar-senha"),
 
     # Registro de novos usuários
-    #path("registrar/", CadastroUsuarioView.as_view(), name="registrar"),
+    path("registrar/", CadastroUsuarioView.as_view(), name="registrar"),
 
     # Pessoa
     path("cadastrar/pessoa/", PessoaCreate.as_view(), name="cadastrar-pessoa"),

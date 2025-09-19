@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     
     # Meus apps ativos
     "paginas.apps.PaginasConfig",
+
+    # Ativar o crispy forms com Bootstrap 5
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -142,3 +146,6 @@ LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
+# Configurações do crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

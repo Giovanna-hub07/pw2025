@@ -1,0 +1,83 @@
+{% extends "paginas/index.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block conteudo %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h3><i class="bi bi-person-plus"></i> {{ titulo }}</h3>
+                <p class="mb-0">Preencha os dados abaixo para criar sua conta no Memorex</p>
+            </div>
+            <div class="card-body">
+                <form method="post" class="mt-3">
+                    {% csrf_token %}
+
+                    <!-- Informações Pessoais -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            <i class="bi bi-person-circle"></i> Informações Pessoais
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.nome|crispy }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.nascimento|crispy }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.cidade|crispy }}
+                        </div>
+                    </div>
+
+                    <!-- Dados de Acesso -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2 mb-3">
+                            <i class="bi bi-key"></i> Dados de Acesso
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.username|crispy }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.email|crispy }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.password1|crispy }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.password2|crispy }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-check-lg"></i>
+                            {{ botao }}
+                        </button>
+                        <a href="{% url 'index' %}" class="btn btn-secondary btn-lg px-5 ms-3">
+                            <i class="bi bi-arrow-left"></i>
+                            Cancelar
+                        </a>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p class="text-muted">
+                            Já tem uma conta? 
+                            <a href="{% url 'login' %}" class="text-decoration-none">
+                                <i class="bi bi-box-arrow-in-right"></i> Fazer login
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

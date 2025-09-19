@@ -3,11 +3,11 @@ body {
     color: var(--texto-escuro);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 20px;
-  }
-  
- 
-  header {
+    padding: 0;
+}
+
+
+header {
     background: linear-gradient(90deg, var(--salmao-claro), var(--rosa-medio));
     padding: 20px;
     border-radius: 8px;
@@ -15,10 +15,10 @@ body {
     color: rgb(185, 216, 252);
     font-size: 2rem;
     font-weight: bold;
-  }
-  
- 
-  button {
+}
+
+
+button {
     background-color: var(--rosa-medio);
     border: none;
     color: white;
@@ -27,27 +27,31 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: var(--salmao-medio);
-  }
+}
 
-  a {
+button:hover {
+    background-color: var(--salmao-medio);
+}
+
+a {
     color: var(--salmao-escuro);
     text-decoration: none;
     transition: color 0.3s ease;
-  }
-  
-  a:hover {
-    color: var(--rosa-escuro);
-  }
+}
 
-  footer {
+a:hover {
+    color: var(--rosa-escuro);
+}
+
+footer {
     text-align: center;
     padding: 15px;
     margin-top: 40px;
     color: var(--salmao-escuro);
     font-weight: 600;
-  }
+}
   
+.nav-link {
+    color: #ffffff;
+
+}
