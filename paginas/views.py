@@ -245,7 +245,11 @@ class QuestaoDelete(GroupRequiredMixin, DeleteView):
 class QuestaoList(GroupRequiredMixin, ListView):
     group_required = ["Administrador", "Professor"]
     model = Questao
-    template_name = 'paginas/listas/questao.html'
+    template_name = 'paginas/listas/questao_cards.html'
+
+    def get_queryset(self):
+        # Retorna todas as questões (sem filtrar pelo usuário)
+        return Questao.objects.all()
 
 
 
@@ -257,4 +261,4 @@ class MinhasQuestoes(LoginRequiredMixin, ListView):
         template_name = 'paginas/listas/questao.html'
 
         return Questao.objects.filter(cadastrada_por=self.request.user)
-    
+

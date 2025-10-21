@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Todas as Questões</h1>
+    <a href="{% url 'cadastrar-questao' %}" class="btn btn-success">+ Nova Questão</a>
+  </div>
+  
+  <div class="row g-4">
+    {% for questao in object_list %}
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h6 class="mb-0">Questão #{{ questao.pk }}</h6>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <p class="card-text mb-3" style="max-height: 100px; overflow: hidden; text-overflow: ellipsis;">
+              {{ questao.descricao|truncatewords:20 }}
+            </p>
+            
+            <div class="mb-2">
+              <small class="text-muted">
+                <strong>Assunto:</strong> {{ questao.assunto.nome }}<br>
+                <strong>Conteúdo:</strong> {{ questao.assunto.conteudo.nome }}<br>
+                <strong>Matéria:</strong> {{ questao.assunto.conteudo.materia.nome }}
+              </small>
+            </div>
+            
+            <div class="mt-auto">
+              <hr>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                  Por: {{ questao.cadastrada_por.username|default:"—" }}<br>
+                  Em: {{ questao.cadastrada_em|date:"d/m/Y" }}
+                </small>
+                <div class="btn-group btn-group-sm">
+                  <a href="{% url 'detalhar-questao' questao.pk %}" class="btn btn-outline-primary" title="Ver detalhes">
+                    <i class="bi bi-eye"></i> Ver
+                  </a>
+                  {% if user == questao.cadastrada_por %}
+                    <a href="{% url 'editar-questao' questao.pk %}" class="btn btn-outline-secondary" title="Editar">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'excluir-questao' questao.pk %}" class="btn btn-outline-danger" title="Excluir">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info">
+          Nenhuma questão cadastrada ainda.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
