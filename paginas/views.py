@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -44,7 +44,9 @@ class SobreView(TemplateView):
 ''
 # -------------------------------------------
 # CRUD Pessoa
-class PessoaCreate(LoginRequiredMixin, CreateView):
+
+class PessoaCreate(GroupRequiredMixin, CreateView):
+    group_required = ["Administrador"]
     model = Pessoa
     template_name = 'paginas/form.html'
     fields = ['nome', 'nascimento', 'cidade']
@@ -77,7 +79,8 @@ class PessoaDelete(LoginRequiredMixin, DeleteView):
         'botao': 'Excluir',
     }
 
-class PessoaList(LoginRequiredMixin, ListView):
+class PessoaList(GroupRequiredMixin, ListView):
+    group_required = ["Administrador"]
     model = Pessoa
     template_name = 'paginas/listas/pessoa.html'
 
@@ -245,20 +248,31 @@ class QuestaoDelete(GroupRequiredMixin, DeleteView):
 class QuestaoList(GroupRequiredMixin, ListView):
     group_required = ["Administrador", "Professor"]
     model = Questao
-    template_name = 'paginas/listas/questao_cards.html'
+    template_name = 'paginas/listas/questao.html'
 
     def get_queryset(self):
-        # Retorna todas as questões (sem filtrar pelo usuário)
         return Questao.objects.all()
+
 
 
 
 class MinhasQuestoes(LoginRequiredMixin, ListView):
     model = Questao
     template_name = 'paginas/listas/questao.html'
-    def get_queryset(self):
-        model = Questao
-        template_name = 'paginas/listas/questao.html'
 
+    def get_queryset(self):
+        if not self.request.user.is_superuser and not self.request.user.groups.filter(name='Administrador').exists() and not self.request.user.groups.filter(name='Professor').exists():
+            return Questao.objects.filter(cadastrada_por__groups__name='Administrador')
         return Questao.objects.filter(cadastrada_por=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+
+class QuestaoDetail(LoginRequiredMixin, DetailView):
+    model = Questao
+    template_name = 'paginas/questao_detalhe.html'
+    context_object_name = 'questao'
 

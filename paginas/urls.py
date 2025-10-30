@@ -7,7 +7,7 @@ from .views import (
     MateriaCreate, MateriaUpdate, MateriaDelete, MateriaList,
     ConteudoCreate, ConteudoUpdate, ConteudoDelete, ConteudoList,
     AssuntoCreate, AssuntoUpdate, AssuntoDelete, AssuntoList,
-    QuestaoCreate, QuestaoUpdate, QuestaoDelete, QuestaoList, MinhasQuestoes
+    QuestaoCreate, QuestaoUpdate, QuestaoDelete, QuestaoList, MinhasQuestoes, QuestaoDetail
 
 )
 
@@ -78,6 +78,7 @@ urlpatterns = [
     path("excluir/questao/<int:pk>/",
          QuestaoDelete.as_view(), name="excluir-questao"),
     path("listar/questao/", QuestaoList.as_view(), name="listar-questao"),
+    path("questao/<int:pk>/", QuestaoDetail.as_view(), name="detalhe-questao"),
 
     # Minhas Questões (apenas do usuário logado)
     path("listar/minhas-questoes/",

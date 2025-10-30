@@ -21,6 +21,19 @@ def has_group(user, group_names):
     return any(group in user_groups for group in group_list)
 
 @register.filter
+def is_admin(user):
+    """
+    Verifica se o usuário é administrador ou superusuário.
+    Uso: {% if user|is_admin %}
+    """
+    if not user.is_authenticated:
+        return False
+    if user.is_superuser:
+        return True
+    user_groups = user.groups.values_list('name', flat=True)
+    return 'Administrador' in user_groups
+
+@register.filter
 def is_admin_or_professor(user):
     """
     Verifica se o usuário é administrador, professor ou superusuário.
@@ -28,11 +41,9 @@ def is_admin_or_professor(user):
     """
     if not user.is_authenticated:
         return False
-    
     # Superusuário sempre tem acesso
     if user.is_superuser:
         return True
-    
     # Verifica se pertence aos grupos Administrador ou Professor
     user_groups = user.groups.values_list('name', flat=True)
     return 'Administrador' in user_groups or 'Professor' in user_groups

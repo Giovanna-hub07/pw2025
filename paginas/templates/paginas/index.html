@@ -3,11 +3,12 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    
+
     <title>
         {% block titulo %}Página Inicial - Memorex{% endblock %}
     </title>
@@ -20,140 +21,166 @@
 <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">
-            <i class="bi bi-journal-bookmark"></i> Memorex
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="bi bi-journal-bookmark"></i> Memorex
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="bi bi-house-door"></i> Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'sobre' %}"><i class="bi bi-info-circle"></i> Sobre</a></li>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}"><i class="bi bi-house-door"></i>
+                            Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'sobre' %}"><i class="bi bi-info-circle"></i>
+                            Sobre</a></li>
 
-                {% if request.user.is_authenticated %}
-                    <!-- Dropdown de Cadastros -->
+                    {% if request.user.is_authenticated %}
+                    <!-- Dropdown de Cadastros (apenas para administradores) -->
+                    {% if user|is_admin %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-plus-circle"></i> Cadastrar
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="cadastroDropdown">
-                            <!-- Para todos os usuários logados -->
-                            <li><a class="dropdown-item" href="{% url 'cadastrar-pessoa' %}"><i class="bi bi-person-plus"></i> Pessoa</a></li>
-                            
-                            <!-- Apenas para Administradores e Professores -->
-                            {% if request.user|is_admin_or_professor %}
-                                <li><hr class="dropdown-divider"></li>
-                                <li><h6 class="dropdown-header">Área Educacional</h6></li>
-                                <li><a class="dropdown-item" href="{% url 'cadastrar-materia' %}"><i class="bi bi-book"></i> Matéria</a></li>
-                                <li><a class="dropdown-item" href="{% url 'cadastrar-conteudo' %}"><i class="bi bi-file-text"></i> Conteúdo</a></li>
-                                <li><a class="dropdown-item" href="{% url 'cadastrar-assunto' %}"><i class="bi bi-tag"></i> Assunto</a></li>
-                                <li><a class="dropdown-item" href="{% url 'cadastrar-questao' %}"><i class="bi bi-question-circle"></i> Questão</a></li>
-                            {% endif %}
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-pessoa' %}"><i
+                                        class="bi bi-person-plus"></i> Pessoa</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <h6 class="dropdown-header">Área Educacional</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-materia' %}"><i class="bi bi-book"></i>
+                                    Matéria</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-conteudo' %}"><i
+                                        class="bi bi-file-text"></i> Conteúdo</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-assunto' %}"><i class="bi bi-tag"></i>
+                                    Assunto</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cadastrar-questao' %}"><i
+                                        class="bi bi-question-circle"></i> Questão</a></li>
                         </ul>
                     </li>
+                    {% endif %}
+
 
                     <!-- Links diretos para Listagens - Diferenciados por grupo -->
-                    <!-- Para todos os usuários logados -->
-                    <li class="nav-item"><a class="nav-link" href="{% url 'listar-pessoa' %}"><i class="bi bi-people"></i> Pessoas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'minhas-questoes' %}"><i class="bi bi-person-check"></i> Minhas Questões</a></li>
-                    
+                    <!-- Pessoas: apenas para administradores -->
+                    {% if user|is_admin %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar-pessoa' %}"><i
+                                class="bi bi-people"></i> Pessoas</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'minhas-questoes' %}"><i
+                                class="bi bi-person-check"></i> Minhas Questões</a></li>
+
                     <!-- Apenas para Administradores e Professores -->
                     {% if request.user|is_admin_or_professor %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'listar-materia' %}"><i class="bi bi-journal-text"></i> Matérias</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'listar-conteudo' %}"><i class="bi bi-list-ul"></i> Conteúdos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'listar-assunto' %}"><i class="bi bi-tags"></i> Assuntos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'listar-questao' %}"><i class="bi bi-collection"></i> Questões</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar-materia' %}"><i
+                                class="bi bi-journal-text"></i> Matérias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar-conteudo' %}"><i
+                                class="bi bi-list-ul"></i> Conteúdos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar-assunto' %}"><i
+                                class="bi bi-tags"></i> Assuntos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'listar-questao' %}"><i
+                                class="bi bi-collection"></i> Questões</a></li>
                     {% endif %}
-                    
+
                     <!-- Dropdown do Usuário -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle"></i> {{ request.user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
-                            <li><a class="dropdown-item" href="{% url 'alterar-senha' %}"><i class="bi bi-key"></i> Alterar Senha</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+                            <li><a class="dropdown-item" href="{% url 'alterar-senha' %}"><i class="bi bi-key"></i>
+                                    Alterar Senha</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i>
+                                    Sair</a></li>
                         </ul>
                     </li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'registrar' %}"><i class="bi bi-person-plus"></i> Registrar</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Entrar</a></li>
-                {% endif %}
-            </ul>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'registrar' %}"><i
+                                class="bi bi-person-plus"></i> Registrar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i
+                                class="bi bi-box-arrow-in-right"></i> Entrar</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
-<main class="container my-5">
-    {% block conteudo %}
-    <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold">Bem-vindo ao Memorex</h1>
-        <p class="lead text-muted">
-            Plataforma de estudo visual para Geometria Analítica, com fórmulas, mapas mentais e questões resolvidas.
-        </p>
-    </div>
+    <main class="container my-5">
+        {% block conteudo %}
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold">Bem-vindo ao Memorex</h1>
+            <p class="lead text-muted">
+                Plataforma de estudo visual para Geometria Analítica, com fórmulas, mapas mentais e questões resolvidas.
+            </p>
+        </div>
 
-    {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <div class="row mb-4 text-center">
-            <!-- Para todos os usuários logados -->
+            {% if user|is_admin %}
             <div class="col-md-4 mb-3">
                 <a href="{% url 'cadastrar-pessoa' %}" class="btn btn-success w-100 py-3">
                     <i class="bi bi-person-plus me-2"></i> Nova Pessoa
                 </a>
             </div>
+            {% endif %}
             <div class="col-md-4 mb-3">
                 <a href="{% url 'minhas-questoes' %}" class="btn btn-info w-100 py-3">
                     <i class="bi bi-person-check me-2"></i> Minhas Questões
                 </a>
             </div>
-            
             <!-- Apenas para Administradores e Professores -->
             {% if request.user|is_admin_or_professor %}
-                <div class="col-md-4 mb-3">
-                    <a href="{% url 'cadastrar-materia' %}" class="btn btn-primary w-100 py-3">
-                        <i class="bi bi-book me-2"></i> Nova Matéria
-                    </a>
-                </div>
+            <div class="col-md-4 mb-3">
+                <a href="{% url 'cadastrar-materia' %}" class="btn btn-primary w-100 py-3">
+                    <i class="bi bi-book me-2"></i> Nova Matéria
+                </a>
+            </div>
             {% endif %}
         </div>
-        
+
         <!-- Segunda linha de botões apenas para Administradores e Professores -->
         {% if request.user|is_admin_or_professor %}
-            <div class="row mb-4 text-center">
-                <div class="col-md-4 mb-3">
-                    <a href="{% url 'cadastrar-conteudo' %}" class="btn btn-secondary w-100 py-3">
-                        <i class="bi bi-file-text me-2"></i> Novo Conteúdo
-                    </a>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <a href="{% url 'cadastrar-assunto' %}" class="btn btn-warning w-100 py-3">
-                        <i class="bi bi-tag me-2"></i> Novo Assunto
-                    </a>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <a href="{% url 'cadastrar-questao' %}" class="btn btn-danger w-100 py-3">
-                        <i class="bi bi-question-circle me-2"></i> Nova Questão
-                    </a>
-                </div>
+        <div class="row mb-4 text-center">
+            <div class="col-md-4 mb-3">
+                <a href="{% url 'cadastrar-conteudo' %}" class="btn btn-secondary w-100 py-3">
+                    <i class="bi bi-file-text me-2"></i> Novo Conteúdo
+                </a>
             </div>
+            <div class="col-md-4 mb-3">
+                <a href="{% url 'cadastrar-assunto' %}" class="btn btn-warning w-100 py-3">
+                    <i class="bi bi-tag me-2"></i> Novo Assunto
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="{% url 'cadastrar-questao' %}" class="btn btn-danger w-100 py-3">
+                    <i class="bi bi-question-circle me-2"></i> Nova Questão
+                </a>
+            </div>
+        </div>
         {% endif %}
-    {% endif %}
-    {% endblock %}
-</main>
+        {% endif %}
+        {% endblock %}
+    </main>
 
 
-<footer class="bg-light text-center py-3 shadow-sm">
-    Desenvolvido por Giovanna
-</footer>
+    <footer class="bg-light text-center py-3 shadow-sm">
+        Desenvolvido por Giovanna
+    </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
